@@ -1,3 +1,4 @@
+from ftplib import error_perm
 from re import X
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -41,21 +42,26 @@ Y = car_dataset['Selling_Price']
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=2)
 
 #Training the model through LinearRegression
+lin_reg_model = LinearRegression()
 
+lin_reg_model.fit(X_train, Y_train)
 
+#Model evaluation, predictiong on training data
+training_data_prediction = lin_reg_model.predict(X_train)
 
+#to compare predicted and original values we should calculate R Square error
+#Sklearn!
+error_score = metrics.r2_score(Y_train, training_data_prediction)
+print("R Squar Error : ", error_score)
 
+# Accuracy is 87% = R Squar Error :  0.8799451660493698
 
-
-
-
-
-
-
-
-
-
-
+#visualize the actual prices and predicted prices
+plt.scatter(Y_train, training_data_prediction)
+plt.xlabel('Actual Prices')
+plt.ylabel('Predicted Prices')
+plt.title('Actual Price vs Predicted Prices')
+plt.show()
 
 
 
